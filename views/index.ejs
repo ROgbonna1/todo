@@ -1,17 +1,34 @@
-<h1>Todo List: <%= todoList.listName %></h1>
-
-<form method='post' action='/add_task'>
-  <label for='taskID'>Task:</label>
-  <input type='text' id='taskID' name='task' />
-  <label for='date'>Due Date:</label>
-  <input type='datetime-local' id='date' name='dueDate' />
+<form class='col s12' method='post' action='/add_task'>
+  <div class="input-field col s9">
+    <label for='taskID'>Task:</label>
+    <input type='text' id='taskID' name='task' />
+  </div>
+  <div class="input-field col s3"> 
+    <!-- <label for='date'>Due Date:</label> -->
+    <input type='datetime-local' id='date' name='dueDate' />
+  </div>
   <input type='submit' />
 </form>
 
-<h2>Current Tasks</h2>
-<ul>
+<table>
+  <thead>
+    <tr>
+      <th>Task</th>
+      <th>Due Date</th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
   <% todoList.tasks.forEach(task => { %>
-    <li><%= task.task %> | Due on <%= task.dueDate %> <form method='post' action="/delete_task"><input type='submit' name='<%= task.task_id %>' value='Delete'></form>
-    </li>
+    <tr>
+      <td class='task' data-id='<%=task.task_id%>'><%= task.task %></td>
+      <td class='due-date' data-id='<%=task.task_id%>'><%= task.dueDate %></td>
+      <td>
+        <form method='post' action="/delete_task">
+          <input type='submit' name='<%= task.task_id %>' value='Delete'>
+        </form>
+      </td>
+    </tr>
   <% }) %>
-</ul>
+  </tbody>
+</table>
